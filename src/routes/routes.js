@@ -6,6 +6,7 @@ import Login from "../pages/Login/Login";
 import SignUp from "../pages/SignUp/SignUp";
 import PrivateRoute from "./PrivateRoute";
 import MyOders from "./../pages/Dashboard/MyOders/MyOders";
+import AddProduct from "./../pages/Dashboard/AddProduct/AddProduct";
 
 const router = createBrowserRouter([
   {
@@ -39,6 +40,14 @@ const router = createBrowserRouter([
         element: (
           <PrivateRoute>
             <MyOders />
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "/dashboard/addproduct",
+        element: (
+          <PrivateRoute>
+            <AddProduct />
           </PrivateRoute>
         ),
       },
