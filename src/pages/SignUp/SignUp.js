@@ -1,19 +1,37 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { useForm } from "react-hook-form";
 
 const SignUp = () => {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
+  const handleSignUp = (data) => {
+    console.log(data);
+  };
   return (
     <div className="max-w-sm mx-auto my-20">
-      <div className="card-body shadow-lg rounded-lg border">
+      <form
+        onSubmit={handleSubmit(handleSignUp)}
+        className="card-body shadow-lg rounded-lg border"
+      >
         <div className="form-control">
           <label className="label">
             <span className="label-text">Name</span>
           </label>
           <input
             type="text"
+            {...register("name", { required: "Name must be required" })}
             placeholder="Name"
             className="input input-bordered"
           />
+          <label>
+            <span className="label-text text-primary">
+              {errors.name?.message}
+            </span>
+          </label>
         </div>
         <div className="form-control">
           <label className="label">
@@ -21,9 +39,17 @@ const SignUp = () => {
           </label>
           <input
             type="email"
+            {...register("email", {
+              required: "Email must be required",
+            })}
             placeholder="email"
             className="input input-bordered"
           />
+          <label>
+            <span className="label-text text-primary">
+              {errors.email?.message}
+            </span>
+          </label>
         </div>
         <div className="form-control">
           <label className="label">
@@ -31,15 +57,36 @@ const SignUp = () => {
           </label>
           <input
             type="password"
+            {...register("password", {
+              required: "password must be required",
+              minLength: {
+                value: 6,
+                message: "Password must be 6 characters long",
+              },
+            })}
             placeholder="password"
             className="input input-bordered"
           />
+          <label>
+            <span className="label-text text-primary">
+              {errors.password?.message}
+            </span>
+          </label>
         </div>
         <div className="form-control">
           <label className="label">
             <span className="label-text">Upload Profile Pic</span>
           </label>
-          <input type="file" accept="image/*" />
+          <input
+            type="file"
+            {...register("image", { required: "Profile pic must be required" })}
+            accept="image/*"
+          />
+          <label>
+            <span className="label-text text-primary">
+              {errors.image?.message}
+            </span>
+          </label>
         </div>
         <div className="form-control">
           <label className="label">
@@ -49,6 +96,8 @@ const SignUp = () => {
             <label className="label cursor-pointer">
               <input
                 type="radio"
+                value={"Buyer"}
+                {...register("role", { required: true })}
                 name="role"
                 className="radio checked:bg-primary"
                 checked
@@ -58,6 +107,8 @@ const SignUp = () => {
             <label className="label cursor-pointer">
               <input
                 type="radio"
+                value={"Seller"}
+                {...register("role", { required: true })}
                 name="role"
                 className="radio checked:bg-primary"
               />
@@ -66,7 +117,10 @@ const SignUp = () => {
           </div>
         </div>
         <div className="form-control mt-6">
-          <button className="btn btn-primary normal-case text-white">
+          <button
+            type="submit"
+            className="btn btn-primary normal-case text-white"
+          >
             Sign Up
           </button>
         </div>
@@ -80,7 +134,7 @@ const SignUp = () => {
             Login
           </Link>
         </p>
-      </div>
+      </form>
     </div>
   );
 };
