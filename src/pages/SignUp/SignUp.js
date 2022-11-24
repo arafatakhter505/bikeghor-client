@@ -1,15 +1,74 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useContext, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
+import { AuthContext } from "./../../context/UserContext";
+import { toast } from "react-hot-toast";
+import BtnSpinner from "./../shared/BtnSpinner/BtnSpinner";
 
 const SignUp = () => {
+  const { createUser, updateUser } = useContext(AuthContext);
+  const [signUpLoading, setSignUpLoading] = useState(false);
+  const navigate = useNavigate();
+
   const {
     register,
     handleSubmit,
     formState: { errors },
+    reset,
   } = useForm();
+
   const handleSignUp = (data) => {
-    console.log(data);
+    setSignUpLoading(true);
+    createUser(data.email, data.password)
+      .then(() => {
+        const image = data.image[0];
+        const formData = new FormData();
+        formData.append("image", image);
+        const url = `https://api.imgbb.com/1/upload?key=${process.env.REACT_APP_imgBBKey}`;
+        fetch(url, {
+          method: "POST",
+          body: formData,
+        })
+          .then((res) => res.json())
+          .then((imgData) => {
+            if (imgData.success) {
+              updateUser(data.name, imgData.data.url)
+                .then(() => {
+                  fetch("http://localhost:5000/users", {
+                    method: "POST",
+                    headers: {
+                      "content-type": "application/json",
+                    },
+                    body: JSON.stringify({
+                      name: data.name,
+                      email: data.email,
+                      image: imgData.data.url,
+                      role: data.role,
+                      varified: false,
+                    }),
+                  })
+                    .then(() => {
+                      toast.success("Successfully Sign Up");
+                      setSignUpLoading(false);
+                      reset();
+                      navigate("/");
+                    })
+                    .catch((e) => {
+                      toast.error(e.message);
+                      setSignUpLoading(false);
+                    });
+                })
+                .catch((e) => {
+                  setSignUpLoading(false);
+                  toast.error(e.message);
+                });
+            }
+          });
+      })
+      .catch((e) => {
+        setSignUpLoading(false);
+        toast.error(e.message);
+      });
   };
   return (
     <div className="max-w-sm mx-auto my-20">
@@ -92,36 +151,21 @@ const SignUp = () => {
           <label className="label">
             <span className="label-text">Account Type</span>
           </label>
-          <div className="flex">
-            <label className="label cursor-pointer">
-              <input
-                type="radio"
-                value={"Buyer"}
-                {...register("role", { required: true })}
-                name="role"
-                className="radio checked:bg-primary"
-                checked
-              />
-              <span className="label-text mx-3">Buyer</span>
-            </label>
-            <label className="label cursor-pointer">
-              <input
-                type="radio"
-                value={"Seller"}
-                {...register("role", { required: true })}
-                name="role"
-                className="radio checked:bg-primary"
-              />
-              <span className="label-text ml-3">Seller</span>
-            </label>
-          </div>
+          <select
+            className="select select-bordered w-full"
+            defaultValue={"Buyer"}
+            {...register("role")}
+          >
+            <option value={"Buyer"}>Buyer</option>
+            <option value={"Seller"}>Seller</option>
+          </select>
         </div>
         <div className="form-control mt-6">
           <button
             type="submit"
             className="btn btn-primary normal-case text-white"
           >
-            Sign Up
+            {signUpLoading ? <BtnSpinner /> : "Sign Up"}
           </button>
         </div>
         <div className="divider">OR</div>

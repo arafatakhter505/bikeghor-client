@@ -1,7 +1,15 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Link } from "react-router-dom";
+import { AuthContext } from "../../../context/UserContext";
+import { toast } from "react-hot-toast";
 
 const Navbar = () => {
+  const { user, logout } = useContext(AuthContext);
+  const handlogOUt = () => {
+    logout()
+      .then(() => toast.success("Successfully Log Out"))
+      .catch((e) => toast.error(e.message));
+  };
   return (
     <nav className="bg-base-100  z-50 sticky top-0 shadow">
       <div className="navbar container mx-auto">
@@ -44,12 +52,21 @@ const Navbar = () => {
           </ul>
         </div>
         <div className="navbar-end">
-          <Link
-            to={"/login"}
-            className="btn btn-primary text-white normal-case"
-          >
-            Login
-          </Link>
+          {user?.uid ? (
+            <button
+              onClick={handlogOUt}
+              className="btn btn-primary text-white normal-case"
+            >
+              Log Out
+            </button>
+          ) : (
+            <Link
+              to={"/login"}
+              className="btn btn-primary text-white normal-case"
+            >
+              Login
+            </Link>
+          )}
         </div>
       </div>
     </nav>
