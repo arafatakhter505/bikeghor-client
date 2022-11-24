@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 const Navbar = () => {
   return (
-    <nav className="bg-base-100  z-50 sticky top-0">
+    <nav className="bg-base-100  z-50 sticky top-0 shadow">
       <div className="navbar container mx-auto">
         <div className="navbar-start">
           <div className="dropdown">
