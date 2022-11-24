@@ -2,6 +2,7 @@ import React, { useContext } from "react";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../../../context/UserContext";
 import { toast } from "react-hot-toast";
+import Dashboard from "./../../../layouts/Dashboard";
 
 const Navbar = () => {
   const { user, logout } = useContext(AuthContext);
@@ -38,6 +39,11 @@ const Navbar = () => {
               <li>
                 <Link to={"/blog"}>Blog</Link>
               </li>
+              {user?.uid && (
+                <li>
+                  <Link to={"/dashboard"}>Dashboard</Link>
+                </li>
+              )}
             </ul>
           </div>
           <Link to={"/"} className="text-3xl font-bold text-secondary">
@@ -49,6 +55,11 @@ const Navbar = () => {
             <li>
               <Link to={"/blog"}>Blog</Link>
             </li>
+            {user?.uid && (
+              <li>
+                <Link to={"/dashboard"}>Dashboard</Link>
+              </li>
+            )}
           </ul>
         </div>
         <div className="navbar-end">

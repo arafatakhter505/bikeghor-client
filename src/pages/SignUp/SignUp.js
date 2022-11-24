@@ -6,7 +6,7 @@ import { toast } from "react-hot-toast";
 import BtnSpinner from "./../shared/BtnSpinner/BtnSpinner";
 
 const SignUp = () => {
-  const { createUser, updateUser } = useContext(AuthContext);
+  const { createUser, updateUser, googleLogin } = useContext(AuthContext);
   const [signUpLoading, setSignUpLoading] = useState(false);
   const navigate = useNavigate();
 
@@ -16,6 +16,35 @@ const SignUp = () => {
     formState: { errors },
     reset,
   } = useForm();
+
+  const handleGoogle = () => {
+    googleLogin()
+      .then((data) => {
+        fetch("http://localhost:5000/users", {
+          method: "POST",
+          headers: {
+            "content-type": "application/json",
+          },
+          body: JSON.stringify({
+            name: data.user.displayName,
+            email: data.user.email,
+            image: data.user.photoURL,
+            role: "Buyer",
+            varified: false,
+          }),
+        })
+          .then(() => {
+            toast.success("Successfully Sign Up");
+            setSignUpLoading(false);
+            navigate("/");
+          })
+          .catch((e) => {
+            toast.error(e.message);
+            setSignUpLoading(false);
+          });
+      })
+      .catch((e) => toast.error(e.message));
+  };
 
   const handleSignUp = (data) => {
     setSignUpLoading(true);
@@ -169,7 +198,10 @@ const SignUp = () => {
           </button>
         </div>
         <div className="divider">OR</div>
-        <div className="btn btn-secondary-outline text-secondary hover:text-white normal-case">
+        <div
+          onClick={handleGoogle}
+          className="btn btn-secondary-outline text-secondary hover:text-white normal-case"
+        >
           Continue With Google
         </div>
         <p>
