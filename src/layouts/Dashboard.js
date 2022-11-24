@@ -58,9 +58,9 @@ const Dashboard = () => {
           </div>
         </div>
       </nav>
-      <div className="drawer drawer-mobile">
+      <div className="drawer drawer-mobile fixed">
         <input id="bikeghor-drawer" type="checkbox" className="drawer-toggle" />
-        <div className="drawer-content">
+        <div className="drawer-content pb-20">
           <Outlet />
         </div>
         <div className="drawer-side">
