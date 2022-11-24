@@ -43,14 +43,11 @@ const Login = () => {
             varified: false,
           }),
         })
+          .then((res) => res.json())
           .then(() => {
             toast.success("Successfully Sign Up");
             setSignUpLoading(false);
             navigate(from, { replace: true });
-          })
-          .catch((e) => {
-            toast.error(e.message);
-            setSignUpLoading(false);
           });
       })
       .catch((e) => toast.error(e.message));

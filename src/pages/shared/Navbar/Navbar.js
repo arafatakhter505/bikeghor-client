@@ -2,11 +2,10 @@ import React, { useContext } from "react";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../../../context/UserContext";
 import { toast } from "react-hot-toast";
-import Dashboard from "./../../../layouts/Dashboard";
 
 const Navbar = () => {
   const { user, logout } = useContext(AuthContext);
-  const handlogOUt = () => {
+  const handleLogOut = () => {
     logout()
       .then(() => toast.success("Successfully Log Out"))
       .catch((e) => toast.error(e.message));
@@ -65,7 +64,7 @@ const Navbar = () => {
         <div className="navbar-end">
           {user?.uid ? (
             <button
-              onClick={handlogOUt}
+              onClick={handleLogOut}
               className="btn btn-primary text-white normal-case"
             >
               Log Out

@@ -33,14 +33,11 @@ const SignUp = () => {
             varified: false,
           }),
         })
+          .then((res) => res.json())
           .then(() => {
             toast.success("Successfully Sign Up");
             setSignUpLoading(false);
             navigate("/");
-          })
-          .catch((e) => {
-            toast.error(e.message);
-            setSignUpLoading(false);
           });
       })
       .catch((e) => toast.error(e.message));
@@ -76,15 +73,12 @@ const SignUp = () => {
                       varified: false,
                     }),
                   })
+                    .then((res) => res.json())
                     .then(() => {
                       toast.success("Successfully Sign Up");
                       setSignUpLoading(false);
                       reset();
                       navigate("/");
-                    })
-                    .catch((e) => {
-                      toast.error(e.message);
-                      setSignUpLoading(false);
                     });
                 })
                 .catch((e) => {
