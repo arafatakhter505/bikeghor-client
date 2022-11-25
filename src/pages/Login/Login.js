@@ -4,6 +4,7 @@ import { useForm } from "react-hook-form";
 import { AuthContext } from "../../context/UserContext";
 import { toast } from "react-hot-toast";
 import BtnSpinner from "./../shared/BtnSpinner/BtnSpinner";
+import useToken from "./../../hooks/useToken";
 
 const Login = () => {
   const { register, handleSubmit } = useForm();
@@ -12,13 +13,15 @@ const Login = () => {
   const location = useLocation();
   const from = location.state?.from?.pathname || "/";
   const [signUpLoading, setSignUpLoading] = useState(false);
+  const [loginEmail, setLoginEmail] = useState("");
+  const [token] = useToken(loginEmail);
 
   const handleLogin = (data) => {
     setSignUpLoading(true);
     login(data.email, data.password)
       .then(() => {
         toast.success("Successfully Login");
-        navigate(from, { replace: true });
+        setLoginEmail(data.email);
         setSignUpLoading(false);
       })
       .catch((e) => {
@@ -46,12 +49,16 @@ const Login = () => {
           .then((res) => res.json())
           .then(() => {
             toast.success("Successfully Sign Up");
+            setLoginEmail(data.user.email);
             setSignUpLoading(false);
-            navigate(from, { replace: true });
           });
       })
       .catch((e) => toast.error(e.message));
   };
+
+  if (token) {
+    navigate(from, { replace: true });
+  }
 
   return (
     <div className="max-w-sm mx-auto my-20">
