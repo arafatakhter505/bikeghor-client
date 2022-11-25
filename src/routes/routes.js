@@ -7,6 +7,7 @@ import SignUp from "../pages/SignUp/SignUp";
 import PrivateRoute from "./PrivateRoute";
 import MyOders from "./../pages/Dashboard/MyOders/MyOders";
 import AddProduct from "./../pages/Dashboard/AddProduct/AddProduct";
+import MyProducts from "./../pages/Dashboard/MyProducts/MyProducts";
 
 const router = createBrowserRouter([
   {
@@ -48,6 +49,14 @@ const router = createBrowserRouter([
         element: (
           <PrivateRoute>
             <AddProduct />
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "/dashboard/myproducts",
+        element: (
+          <PrivateRoute>
+            <MyProducts />
           </PrivateRoute>
         ),
       },

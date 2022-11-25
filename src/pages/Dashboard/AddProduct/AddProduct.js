@@ -2,11 +2,16 @@ import React, { useContext, useEffect, useState } from "react";
 import { AuthContext } from "./../../../context/UserContext";
 import axios from "axios";
 import { useForm } from "react-hook-form";
+import { toast } from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
+import BtnSpinner from "./../../shared/BtnSpinner/BtnSpinner";
 
 const AddProduct = () => {
   const { user } = useContext(AuthContext);
   const [categories, setCategories] = useState([]);
   const { register, handleSubmit } = useForm();
+  const [pageLoading, setPageLoading] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     axios
@@ -15,6 +20,7 @@ const AddProduct = () => {
   }, []);
 
   const handleAddProduct = (data) => {
+    setPageLoading(true);
     const image = data.image[0];
     const formData = new FormData();
     formData.append("image", image);
@@ -33,7 +39,34 @@ const AddProduct = () => {
             orignalPrice: data.orignalPrice,
             useYears: data.useYears,
             condition: data.condition,
+            mobileNumber: data.mobileNumber,
+            category: data.category,
+            drivenKm: data.drivenKm,
+            milage: data.milage,
+            bikeCC: data.bikeCC,
+            image: imgData.data.url,
+            sellerName: user?.displayName,
+            sellerEmail: user?.email,
+            date: new Date().toISOString().split("T")[0],
+            sold: false,
           };
+
+          fetch("http://localhost:5000/products", {
+            method: "POST",
+            headers: {
+              "content-type": "application/json",
+              authorization: `bearer ${localStorage.getItem(
+                "bikeghor-accessToken"
+              )}`,
+            },
+            body: JSON.stringify(product),
+          })
+            .then((res) => res.json())
+            .then(() => {
+              toast.success(`${data.title} is added successfully`);
+              setPageLoading(false);
+              navigate("/dashboard/myproducts");
+            });
         }
       });
   };
@@ -95,19 +128,23 @@ const AddProduct = () => {
           <div className="grid md:grid-cols-2 grid-cols-1 gap-6 my-6">
             <input
               type="text"
-              {...register("sellerName", { required: true })}
-              placeholder="Seller name"
-              defaultValue={user.displayName}
-              className="input input-bordered w-full"
-              readOnly
-              disabled
-            />
-            <input
-              type="text"
               {...register("mobileNumber", { required: true })}
               placeholder="Mobile number"
               className="input input-bordered w-full"
             />
+            <select
+              {...register("category", { required: true })}
+              className="select select-bordered w-full"
+            >
+              <option disabled selected>
+                Category
+              </option>
+              {categories.map((category) => (
+                <option key={category._id} value={category.name}>
+                  {category.name}
+                </option>
+              ))}
+            </select>
           </div>
           <div className="grid md:grid-cols-2 grid-cols-1 gap-6 my-6">
             <input
@@ -138,30 +175,18 @@ const AddProduct = () => {
             />
           </div>
           <div className="grid md:grid-cols-2 grid-cols-1 gap-6 my-6">
+            <label>Upload Image</label>
             <input
               type="file"
               {...register("image", { required: true })}
               accept="image/*"
             />
-            <select
-              {...register("category", { required: true })}
-              className="select select-bordered w-full"
-            >
-              <option disabled selected>
-                Category
-              </option>
-              {categories.map((category) => (
-                <option key={category._id} value={category.name}>
-                  {category.name}
-                </option>
-              ))}
-            </select>
           </div>
           <button
             type="submit"
             className="btn btn-primary text-white normal-case"
           >
-            Submit
+            {pageLoading ? <BtnSpinner /> : "Submit"}
           </button>
         </form>
       </div>

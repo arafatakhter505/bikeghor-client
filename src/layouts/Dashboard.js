@@ -74,7 +74,7 @@ const Dashboard = () => {
             {isSeller && (
               <>
                 <li>
-                  <Link to={"/dashboard/addproduct"}>Add A Prdoduct</Link>
+                  <Link to={"/dashboard/addproduct"}>Add A Product</Link>
                 </li>
                 <li>
                   <Link to={"/dashboard/myproducts"}>My Products</Link>
