@@ -43,6 +43,7 @@ const AddProduct = () => {
             category: data.category,
             drivenKm: data.drivenKm,
             milage: data.milage,
+            brandName: data.brandName,
             bikeCC: data.bikeCC,
             image: imgData.data.url,
             sellerName: user?.displayName,
