@@ -15,7 +15,27 @@ const AddProduct = () => {
   }, []);
 
   const handleAddProduct = (data) => {
-    console.log(data);
+    const image = data.image[0];
+    const formData = new FormData();
+    formData.append("image", image);
+    const url = `https://api.imgbb.com/1/upload?key=${process.env.REACT_APP_imgBBKey}`;
+    fetch(url, {
+      method: "POST",
+      body: formData,
+    })
+      .then((res) => res.json())
+      .then((imgData) => {
+        if (imgData.success) {
+          const product = {
+            title: data.title,
+            location: data.location,
+            reselPrice: data.reselPrice,
+            orignalPrice: data.orignalPrice,
+            useYears: data.useYears,
+            condition: data.condition,
+          };
+        }
+      });
   };
 
   return (

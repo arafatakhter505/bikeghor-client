@@ -4,11 +4,14 @@ import { useForm } from "react-hook-form";
 import { AuthContext } from "./../../context/UserContext";
 import { toast } from "react-hot-toast";
 import BtnSpinner from "./../shared/BtnSpinner/BtnSpinner";
+import useToken from "./../../hooks/useToken";
 
 const SignUp = () => {
   const { createUser, updateUser, googleLogin } = useContext(AuthContext);
   const [signUpLoading, setSignUpLoading] = useState(false);
   const navigate = useNavigate();
+  const [userEmail, setUserEmail] = useState("");
+  const [token] = useToken(userEmail);
 
   const {
     register,
@@ -36,8 +39,8 @@ const SignUp = () => {
           .then((res) => res.json())
           .then(() => {
             toast.success("Successfully Sign Up");
+            setUserEmail(data.user.email);
             setSignUpLoading(false);
-            navigate("/");
           });
       })
       .catch((e) => toast.error(e.message));
@@ -76,9 +79,9 @@ const SignUp = () => {
                     .then((res) => res.json())
                     .then(() => {
                       toast.success("Successfully Sign Up");
+                      setUserEmail(data.email);
                       setSignUpLoading(false);
                       reset();
-                      navigate("/");
                     });
                 })
                 .catch((e) => {
@@ -93,6 +96,11 @@ const SignUp = () => {
         toast.error(e.message);
       });
   };
+
+  if (token) {
+    navigate("/");
+  }
+
   return (
     <div className="max-w-sm mx-auto my-20">
       <form
