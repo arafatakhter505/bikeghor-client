@@ -36,7 +36,7 @@ const AddProduct = () => {
             title: data.title,
             location: data.location,
             reselPrice: data.reselPrice,
-            orignalPrice: data.orignalPrice,
+            originalPrice: data.originalPrice,
             useYears: data.useYears,
             condition: data.condition,
             mobileNumber: data.mobileNumber,
@@ -141,7 +141,7 @@ const AddProduct = () => {
                 Category
               </option>
               {categories.map((category) => (
-                <option key={category._id} value={category.name}>
+                <option key={category._id} value={category.link}>
                   {category.name}
                 </option>
               ))}

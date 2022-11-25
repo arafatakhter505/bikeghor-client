@@ -8,6 +8,7 @@ import PrivateRoute from "./PrivateRoute";
 import MyOders from "./../pages/Dashboard/MyOders/MyOders";
 import AddProduct from "./../pages/Dashboard/AddProduct/AddProduct";
 import MyProducts from "./../pages/Dashboard/MyProducts/MyProducts";
+import Category from "./../pages/Category/Category";
 
 const router = createBrowserRouter([
   {
@@ -25,6 +26,22 @@ const router = createBrowserRouter([
       {
         path: "/signup",
         element: <SignUp />,
+      },
+      {
+        path: "/category/:id",
+        element: (
+          <PrivateRoute>
+            <Category />
+          </PrivateRoute>
+        ),
+        loader: async ({ params }) =>
+          fetch(`http://localhost:5000/products/category/${params.id}`, {
+            headers: {
+              authorization: `bearer ${localStorage.getItem(
+                "bikeghor-accessToken"
+              )}`,
+            },
+          }),
       },
     ],
   },
