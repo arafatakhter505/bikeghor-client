@@ -75,7 +75,7 @@ const ProductCard = ({ product }) => {
           <p>Category: {category}</p>
           <p>Kilometer Drive: {drivenKm}Km</p>
           <p>Milage: {milage}Km</p>
-          <p>Brnad Name: {brandName}</p>
+          <p>Brand Name: {brandName}</p>
           <p>Bike CC: {bikeCC}</p>
         </div>
         <div className="card-actions justify-end">
