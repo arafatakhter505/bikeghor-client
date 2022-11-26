@@ -5,7 +5,7 @@ import ProductCard from "./ProductCard";
 
 const Category = () => {
   const products = useLoaderData();
-  const [selectedProduct, setSelectedProduct] = useState({});
+  const [selectedProduct, setSelectedProduct] = useState(null);
 
   return (
     <div className="container mx-auto px-6 lg:px-3 my-12">
@@ -16,7 +16,7 @@ const Category = () => {
           setSelectedProduct={setSelectedProduct}
         />
       ))}
-      <BookNowModal selectedProduct={selectedProduct} />
+      {selectedProduct && <BookNowModal selectedProduct={selectedProduct} />}
     </div>
   );
 };

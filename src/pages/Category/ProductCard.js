@@ -43,8 +43,6 @@ const ProductCard = ({ product, setSelectedProduct }) => {
     },
   });
 
-  console.log(seller);
-
   return (
     <div className="card lg:card-side bg-base-100 shadow-xl mb-12 border">
       <figure className="lg:w-1/3 m-4 border">

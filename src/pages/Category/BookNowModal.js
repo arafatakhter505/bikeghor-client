@@ -1,9 +1,36 @@
 import React, { useContext } from "react";
 import { AuthContext } from "./../../context/UserContext";
+import { useForm } from "react-hook-form";
 
 const BookNowModal = ({ selectedProduct }) => {
-  const { title, reselPrice } = selectedProduct;
+  const { _id, title, reselPrice } = selectedProduct;
   const { user } = useContext(AuthContext);
+
+  const handleBooking = (event) => {
+    event.preventDefault();
+    const form = event.target;
+    const name = form.name.value;
+    const email = form.email.value;
+    const productName = form.productName.value;
+    const price = form.productPrice.value;
+    const phoneNumber = form.phoneNumber.value;
+    const meetLocation = form.meetLocation.value;
+
+    fetch(`http://localhost:5000/products/category/${_id}`, {
+      method: "PUT",
+      headers: {
+        "content-type": "application/json",
+        authorization: `bearer ${localStorage.getItem("bikeghor-accessToken")}`,
+      },
+      body: JSON.stringify({ sold: true }),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.modifiedCount > 0) {
+        }
+      });
+  };
+
   return (
     <div>
       <input
@@ -20,7 +47,7 @@ const BookNowModal = ({ selectedProduct }) => {
             ✕
           </label>
           <h3 className="text-lg font-bold">{title}</h3>
-          <form className="py-4">
+          <form onSubmit={handleBooking} className="py-4">
             <div className="form-control w-full mb-3">
               <label className="label">
                 <span className="label-text">Name</span>
@@ -28,7 +55,8 @@ const BookNowModal = ({ selectedProduct }) => {
               <input
                 type="text"
                 placeholder="Name"
-                defaultValue={user?.displayName}
+                name="name"
+                value={user?.displayName}
                 className="input input-bordered w-full"
                 readOnly
                 disabled
@@ -41,7 +69,8 @@ const BookNowModal = ({ selectedProduct }) => {
               <input
                 type="email"
                 placeholder="Email"
-                defaultValue={user?.email}
+                name="email"
+                value={user?.email}
                 className="input input-bordered w-full"
                 readOnly
                 disabled
@@ -54,7 +83,8 @@ const BookNowModal = ({ selectedProduct }) => {
               <input
                 type="text"
                 placeholder="Product name"
-                defaultValue={title}
+                name="productName"
+                value={title}
                 className="input input-bordered w-full"
                 readOnly
                 disabled
@@ -67,7 +97,8 @@ const BookNowModal = ({ selectedProduct }) => {
               <input
                 type="text"
                 placeholder="Product price"
-                defaultValue={reselPrice}
+                name="productPrice"
+                value={reselPrice}
                 className="input input-bordered w-full"
                 readOnly
                 disabled
@@ -80,7 +111,9 @@ const BookNowModal = ({ selectedProduct }) => {
               <input
                 type="text"
                 placeholder="Phone Number"
+                name="phoneNumber"
                 className="input input-bordered w-full"
+                required
               />
             </div>
             <div className="form-control w-full mb-3">
@@ -90,7 +123,9 @@ const BookNowModal = ({ selectedProduct }) => {
               <input
                 type="text"
                 placeholder="Meeting Location"
+                name="meetLocation"
                 className="input input-bordered w-full"
+                required
               />
             </div>
             <button
