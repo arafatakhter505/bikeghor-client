@@ -14,11 +14,13 @@ import MyDashboard from "./../pages/Dashboard/MyDashboard/MyDashboard";
 import AllSellers from "./../pages/Dashboard/AllSellers/AllSellers";
 import AllBuyers from "./../pages/Dashboard/AllBuyers/AllBuyers";
 import Report from "./../pages/Dashboard/Report/Report";
+import ErrorPage from "../pages/ErrorPage/ErrorPage";
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <Main />,
+    errorElement: <ErrorPage />,
     children: [
       {
         path: "/",
@@ -49,6 +51,7 @@ const router = createBrowserRouter([
         <Dashboard />
       </PrivateRoute>
     ),
+    errorElement: <ErrorPage />,
     children: [
       {
         path: "/dashboard",
