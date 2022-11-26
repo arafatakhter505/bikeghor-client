@@ -20,6 +20,7 @@ const ProductCard = ({ product, setSelectedProduct }) => {
     date,
     sellerName,
     sellerEmail,
+    booked,
   } = product;
   const { data: seller } = useQuery({
     queryKey: ["seller"],
@@ -77,13 +78,19 @@ const ProductCard = ({ product, setSelectedProduct }) => {
           <p>Bike CC: {bikeCC}</p>
         </div>
         <div className="card-actions justify-end">
-          <label
-            onClick={() => setSelectedProduct(product)}
-            htmlFor="bikeghor-book-modal"
-            className="btn btn-primary text-white normal-case"
-          >
-            Book Now
-          </label>
+          {booked ? (
+            <button className="btn normal-case" disabled>
+              Booked
+            </button>
+          ) : (
+            <label
+              onClick={() => setSelectedProduct(product)}
+              htmlFor="bikeghor-book-modal"
+              className="btn btn-primary text-white normal-case"
+            >
+              Book Now
+            </label>
+          )}
         </div>
       </div>
     </div>

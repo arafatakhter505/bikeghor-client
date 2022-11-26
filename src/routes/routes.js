@@ -34,14 +34,6 @@ const router = createBrowserRouter([
             <Category />
           </PrivateRoute>
         ),
-        loader: async ({ params }) =>
-          fetch(`http://localhost:5000/products/category/${params.id}`, {
-            headers: {
-              authorization: `bearer ${localStorage.getItem(
-                "bikeghor-accessToken"
-              )}`,
-            },
-          }),
       },
     ],
   },

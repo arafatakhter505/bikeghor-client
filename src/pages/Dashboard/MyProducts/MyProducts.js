@@ -7,7 +7,11 @@ import Spinner from "./../../shared/Spinner/Spinner";
 
 const MyProducts = () => {
   const { user } = useContext(AuthContext);
-  const { data: products, isLoading } = useQuery({
+  const {
+    data: products,
+    isLoading,
+    refetch,
+  } = useQuery({
     queryKey: ["products"],
     queryFn: async () => {
       try {
@@ -28,6 +32,28 @@ const MyProducts = () => {
       }
     },
   });
+
+  const handleProductDelete = (id) => {
+    const confirm = window.confirm("Are you sure delete this product");
+    if (confirm) {
+      fetch(`http://localhost:5000/products/${id}?email=${user.email}`, {
+        method: "DELETE",
+        headers: {
+          "content-type": "application/json",
+          authorization: `bearer ${localStorage.getItem(
+            "bikeghor-accessToken"
+          )}`,
+        },
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          if (data.deletedCount > 0) {
+            refetch();
+            toast.success("Successfully delete");
+          }
+        });
+    }
+  };
 
   return (
     <div className="md:p-12 p-6">
@@ -54,7 +80,12 @@ const MyProducts = () => {
               </thead>
               <tbody>
                 {products?.map((product, i) => (
-                  <MyProductRow key={product._id} product={product} index={i} />
+                  <MyProductRow
+                    key={product._id}
+                    product={product}
+                    index={i}
+                    handleProductDelete={handleProductDelete}
+                  />
                 ))}
               </tbody>
             </table>

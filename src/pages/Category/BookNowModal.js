@@ -3,7 +3,7 @@ import Spinner from "../shared/Spinner/Spinner";
 import { AuthContext } from "./../../context/UserContext";
 import { toast } from "react-hot-toast";
 
-const BookNowModal = ({ selectedProduct, setSelectedProduct }) => {
+const BookNowModal = ({ selectedProduct, setSelectedProduct, refetch }) => {
   const { _id, title, reselPrice, image } = selectedProduct;
   const { user } = useContext(AuthContext);
   const [bookingLoading, setBookingLoading] = useState(false);
@@ -19,13 +19,13 @@ const BookNowModal = ({ selectedProduct, setSelectedProduct }) => {
     const phoneNumber = form.phoneNumber.value;
     const meetLocation = form.meetLocation.value;
 
-    fetch(`http://localhost:5000/products/category/${_id}`, {
+    fetch(`http://localhost:5000/products/booked/${_id}`, {
       method: "PUT",
       headers: {
         "content-type": "application/json",
         authorization: `bearer ${localStorage.getItem("bikeghor-accessToken")}`,
       },
-      body: JSON.stringify({ sold: true }),
+      body: JSON.stringify({ booked: true }),
     })
       .then((res) => res.json())
       .then((data) => {
@@ -53,6 +53,7 @@ const BookNowModal = ({ selectedProduct, setSelectedProduct }) => {
             .then((data) => {
               if (data.acknowledged) {
                 toast.success(`${title} is booked`);
+                refetch();
                 setSelectedProduct(null);
                 setBookingLoading(false);
               }

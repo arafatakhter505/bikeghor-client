@@ -50,6 +50,7 @@ const AddProduct = () => {
             sellerEmail: user?.email,
             date: new Date().toISOString().split("T")[0],
             sold: false,
+            booked: false,
           };
 
           fetch("http://localhost:5000/products", {

@@ -1,7 +1,7 @@
 import React from "react";
 
-const MyProductRow = ({ product, index }) => {
-  const { title, image, brandName, date, sold } = product;
+const MyProductRow = ({ product, index, handleProductDelete }) => {
+  const { _id, title, image, brandName, date, sold } = product;
   return (
     <tr>
       <th>
@@ -30,7 +30,7 @@ const MyProductRow = ({ product, index }) => {
         )}
       </th>
       <td>
-        <button>
+        <button onClick={() => handleProductDelete(_id)}>
           <img
             src="https://cdn-icons-png.flaticon.com/512/1345/1345874.png"
             alt=""
