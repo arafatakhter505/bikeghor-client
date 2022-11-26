@@ -2,7 +2,7 @@ import React from "react";
 import { useQuery } from "@tanstack/react-query";
 import { toast } from "react-hot-toast";
 
-const ProductCard = ({ product }) => {
+const ProductCard = ({ product, setSelectedProduct }) => {
   const {
     image,
     title,
@@ -79,9 +79,13 @@ const ProductCard = ({ product }) => {
           <p>Bike CC: {bikeCC}</p>
         </div>
         <div className="card-actions justify-end">
-          <button className="btn btn-primary text-white normal-case">
+          <label
+            onClick={() => setSelectedProduct(product)}
+            htmlFor="bikeghor-book-modal"
+            className="btn btn-primary text-white normal-case"
+          >
             Book Now
-          </button>
+          </label>
         </div>
       </div>
     </div>
