@@ -9,6 +9,11 @@ import MyOders from "./../pages/Dashboard/MyOders/MyOders";
 import AddProduct from "./../pages/Dashboard/AddProduct/AddProduct";
 import MyProducts from "./../pages/Dashboard/MyProducts/MyProducts";
 import Category from "./../pages/Category/Category";
+import MyBuyers from "./../pages/Dashboard/MyBuyers/MyBuyers";
+import MyDashboard from "./../pages/Dashboard/MyDashboard/MyDashboard";
+import AllSellers from "./../pages/Dashboard/AllSellers/AllSellers";
+import AllBuyers from "./../pages/Dashboard/AllBuyers/AllBuyers";
+import Report from "./../pages/Dashboard/Report/Report";
 
 const router = createBrowserRouter([
   {
@@ -46,6 +51,14 @@ const router = createBrowserRouter([
     ),
     children: [
       {
+        path: "/dashboard",
+        element: (
+          <PrivateRoute>
+            <MyDashboard />
+          </PrivateRoute>
+        ),
+      },
+      {
         path: "/dashboard/myorders",
         element: (
           <PrivateRoute>
@@ -66,6 +79,38 @@ const router = createBrowserRouter([
         element: (
           <PrivateRoute>
             <MyProducts />
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "/dashboard/mybuyers",
+        element: (
+          <PrivateRoute>
+            <MyBuyers />
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "/dashboard/allsellers",
+        element: (
+          <PrivateRoute>
+            <AllSellers />
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "/dashboard/allbuyers",
+        element: (
+          <PrivateRoute>
+            <AllBuyers />
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "/dashboard/report",
+        element: (
+          <PrivateRoute>
+            <Report />
           </PrivateRoute>
         ),
       },

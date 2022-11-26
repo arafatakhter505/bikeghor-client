@@ -76,8 +76,25 @@ const MyProducts = () => {
         .then((res) => res.json())
         .then((data) => {
           if (data.deletedCount > 0) {
-            refetch();
-            toast.success("Successfully delete");
+            fetch(
+              `http://localhost:5000/advertise?email=${user.email}&id=${id}`,
+              {
+                method: "DELETE",
+                headers: {
+                  "content-type": "application/json",
+                  authorization: `bearer ${localStorage.getItem(
+                    "bikeghor-accessToken"
+                  )}`,
+                },
+              }
+            )
+              .then((res) => res.json())
+              .then((data) => {
+                if (data.acknowledged) {
+                  refetch();
+                  toast.success("Successfully delete");
+                }
+              });
           }
         });
     }

@@ -33,7 +33,7 @@ const MyProductRow = ({
             onClick={() => handleAdvertised(product)}
             className="btn btn-primary text-white normal-case btn-xs"
           >
-            Advertised
+            Advertise
           </button>
         )}
       </th>

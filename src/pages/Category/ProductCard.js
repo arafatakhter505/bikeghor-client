@@ -50,12 +50,13 @@ const ProductCard = ({ product, setSelectedProduct }) => {
         <img src={image} alt="product" className="w-[100%] h-[100%]" />
       </figure>
       <div className="card-body">
-        <h3 className="text-xl text-primary">
+        <h3 className="text-xl text-primary flex items-center">
           Seller Name: {sellerName}{" "}
-          {seller?.verified ? (
+          {seller?.varified ? (
             <img
               src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e0/Eo_circle_light-blue_checkmark.svg/1200px-Eo_circle_light-blue_checkmark.svg.png"
               alt=""
+              className="w-4"
             />
           ) : (
             <span className="badge">Unverified</span>

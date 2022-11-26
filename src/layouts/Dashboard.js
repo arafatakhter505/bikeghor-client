@@ -4,11 +4,13 @@ import { AuthContext } from "../context/UserContext";
 import { toast } from "react-hot-toast";
 import useBuyer from "./../hooks/useBuyer";
 import useSeller from "./../hooks/useSeller";
+import useAdmin from "./../hooks/useAdmin";
 
 const Dashboard = () => {
   const { user, logout } = useContext(AuthContext);
   const [isBuyer] = useBuyer(user?.email);
   const [isSeller] = useSeller(user?.email);
+  const [isAdmin] = useAdmin(user?.email);
 
   const handleLogOut = () => {
     logout()
@@ -81,6 +83,19 @@ const Dashboard = () => {
                 </li>
                 <li>
                   <Link to={"/dashboard/mybuyers"}>My Buyers</Link>
+                </li>
+              </>
+            )}
+            {isAdmin && (
+              <>
+                <li>
+                  <Link to={"/dashboard/allsellers"}>All Sellers</Link>
+                </li>
+                <li>
+                  <Link to={"/dashboard/allbuyers"}>All Buyers</Link>
+                </li>
+                <li>
+                  <Link to={"/dashboard/report"}>Reported Items</Link>
                 </li>
               </>
             )}
