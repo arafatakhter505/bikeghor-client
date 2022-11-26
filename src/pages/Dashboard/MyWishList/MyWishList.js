@@ -1,18 +1,18 @@
 import React, { useContext } from "react";
-import { useQuery } from "@tanstack/react-query";
 import { AuthContext } from "./../../../context/UserContext";
+import { useQuery } from "@tanstack/react-query";
 import { toast } from "react-hot-toast";
 import Spinner from "./../../shared/Spinner/Spinner";
-import MyOrderRow from "./MyOrderRow";
+import MyWishListRow from "./MyWishListRow";
 
-const MyOders = () => {
+const MyWishList = () => {
   const { user } = useContext(AuthContext);
-  const { data: orders, isLoading } = useQuery({
-    queryKey: ["orders"],
+  const { data: wishlist, isLoading } = useQuery({
+    queryKey: ["wishlist"],
     queryFn: async () => {
       try {
         const res = await fetch(
-          `http://localhost:5000/orders?email=${user.email}`,
+          `http://localhost:5000/wishlist?email=${user.email}`,
           {
             headers: {
               authorization: `bearer ${localStorage.getItem(
@@ -32,7 +32,7 @@ const MyOders = () => {
   return (
     <div className="md:p-12 p-6">
       <h2 className="text-3xl font-semibold">
-        My <span className="text-primary">Orders</span>
+        My <span className="text-primary">Wishlist</span>
       </h2>
       <div className="mt-6">
         {isLoading ? (
@@ -52,8 +52,8 @@ const MyOders = () => {
                 </tr>
               </thead>
               <tbody>
-                {orders.map((order, i) => (
-                  <MyOrderRow key={order._id} index={i} order={order} />
+                {wishlist.map((item, i) => (
+                  <MyWishListRow key={item._id} index={i} item={item} />
                 ))}
               </tbody>
             </table>
@@ -64,4 +64,4 @@ const MyOders = () => {
   );
 };
 
-export default MyOders;
+export default MyWishList;

@@ -2,7 +2,7 @@ import React from "react";
 import { useQuery } from "@tanstack/react-query";
 import { toast } from "react-hot-toast";
 
-const ProductCard = ({ product, setSelectedProduct }) => {
+const ProductCard = ({ product, setSelectedProduct, handleWishList }) => {
   const {
     image,
     title,
@@ -79,6 +79,14 @@ const ProductCard = ({ product, setSelectedProduct }) => {
           <p>Bike CC: {bikeCC}</p>
         </div>
         <div className="card-actions justify-end">
+          {booked || (
+            <button
+              onClick={() => handleWishList(product)}
+              className="btn btn-secondary normal-case"
+            >
+              Add WishList
+            </button>
+          )}
           {booked ? (
             <button className="btn normal-case" disabled>
               Booked

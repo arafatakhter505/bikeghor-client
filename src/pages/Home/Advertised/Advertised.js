@@ -28,7 +28,7 @@ const Advertised = () => {
         <h2 className="text-primary text-3xl font-semibold">Advertised</h2>
         <div className="mt-6 grid md:grid-cols-2 grid-cols-1 gap-10">
           {advertise.map((advertised) => (
-            <AvertisedCard advertised={advertised} />
+            <AvertisedCard key={advertised._id} advertised={advertised} />
           ))}
         </div>
       </div>

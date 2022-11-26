@@ -1,13 +1,15 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { useParams } from "react-router-dom";
 import BookNowModal from "./BookNowModal";
 import ProductCard from "./ProductCard";
 import { useQuery } from "@tanstack/react-query";
 import { toast } from "react-hot-toast";
 import Spinner from "../shared/Spinner/Spinner";
+import { AuthContext } from "./../../context/UserContext";
 
 const Category = () => {
   const { id } = useParams();
+  const { user } = useContext(AuthContext);
   const {
     data: products,
     isLoading,
@@ -35,6 +37,31 @@ const Category = () => {
   });
   const [selectedProduct, setSelectedProduct] = useState(null);
 
+  const handleWishList = (item) => {
+    fetch(`http://localhost:5000/wishlist?email=${user.email}`, {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+        authorization: `bearer ${localStorage.getItem("bikeghor-accessToken")}`,
+      },
+      body: JSON.stringify({
+        image: item.image,
+        title: item.title,
+        price: item.reselPrice,
+        productId: item._id,
+        email: user?.email,
+      }),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.acknowledged) {
+          toast.success("Successfully product wishlist add");
+        } else {
+          toast.error("Something is wrong");
+        }
+      });
+  };
+
   return (
     <div className="container mx-auto px-6 lg:px-3 my-12">
       {isLoading ? (
@@ -48,6 +75,7 @@ const Category = () => {
                   key={product._id}
                   product={product}
                   setSelectedProduct={setSelectedProduct}
+                  handleWishList={handleWishList}
                 />
               ))}
             </>

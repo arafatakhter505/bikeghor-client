@@ -69,9 +69,14 @@ const Dashboard = () => {
           <label htmlFor="bikeghor-drawer" className="drawer-overlay"></label>
           <ul className="menu p-4 w-64 bg-base-100 text-base-content lg:border-r">
             {isBuyer && (
-              <li>
-                <Link to={"/dashboard/myorders"}>My Orders</Link>
-              </li>
+              <>
+                <li>
+                  <Link to={"/dashboard/myorders"}>My Orders</Link>
+                </li>
+                <li>
+                  <Link to={"/dashboard/mywishlist"}>My Wishlist</Link>
+                </li>
+              </>
             )}
             {isSeller && (
               <>

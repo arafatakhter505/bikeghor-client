@@ -1,8 +1,8 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-const MyOrderRow = ({ order, index }) => {
-  const { image, productName, price, paid, productId } = order;
+const MyWishListRow = ({ item, index }) => {
+  const { image, title, price, productId } = item;
   return (
     <tr>
       <th>
@@ -19,23 +19,19 @@ const MyOrderRow = ({ order, index }) => {
       </td>
       <td>
         <div>
-          <div className="font-bold">{productName}</div>
+          <div className="font-bold">{title}</div>
         </div>
       </td>
       <td>{price}</td>
       <th>
-        {paid ? (
-          "paid"
-        ) : (
-          <Link to={`/dashboard/payment/${productId}`}>
-            <button className="btn btn-primary text-white normal-case btn-sm">
-              Pay
-            </button>
-          </Link>
-        )}
+        <Link to={`/dashboard/payment/${productId}`}>
+          <button className="btn btn-primary text-white normal-case btn-sm">
+            Pay
+          </button>
+        </Link>
       </th>
     </tr>
   );
 };
 
-export default MyOrderRow;
+export default MyWishListRow;

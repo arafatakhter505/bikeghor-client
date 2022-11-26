@@ -11,7 +11,10 @@ const Navbar = () => {
       .catch((e) => toast.error(e.message));
   };
   return (
-    <nav className="bg-base-100  z-50 sticky top-0 shadow">
+    <nav
+      className="bg-base-100  z-50 
+     shadow sticky top-0"
+    >
       <div className="navbar container mx-auto">
         <div className="navbar-start">
           <div className="dropdown">
