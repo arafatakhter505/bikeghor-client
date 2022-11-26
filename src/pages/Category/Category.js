@@ -16,7 +16,12 @@ const Category = () => {
           setSelectedProduct={setSelectedProduct}
         />
       ))}
-      {selectedProduct && <BookNowModal selectedProduct={selectedProduct} />}
+      {selectedProduct && (
+        <BookNowModal
+          selectedProduct={selectedProduct}
+          setSelectedProduct={setSelectedProduct}
+        />
+      )}
     </div>
   );
 };

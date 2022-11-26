@@ -1,12 +1,15 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
+import Spinner from "../shared/Spinner/Spinner";
 import { AuthContext } from "./../../context/UserContext";
-import { useForm } from "react-hook-form";
+import { toast } from "react-hot-toast";
 
-const BookNowModal = ({ selectedProduct }) => {
-  const { _id, title, reselPrice } = selectedProduct;
+const BookNowModal = ({ selectedProduct, setSelectedProduct }) => {
+  const { _id, title, reselPrice, image } = selectedProduct;
   const { user } = useContext(AuthContext);
+  const [bookingLoading, setBookingLoading] = useState(false);
 
   const handleBooking = (event) => {
+    setBookingLoading(true);
     event.preventDefault();
     const form = event.target;
     const name = form.name.value;
@@ -27,6 +30,33 @@ const BookNowModal = ({ selectedProduct }) => {
       .then((res) => res.json())
       .then((data) => {
         if (data.modifiedCount > 0) {
+          fetch("http://localhost:5000/orders", {
+            method: "POST",
+            headers: {
+              "content-type": "application/json",
+              authorization: `bearer ${localStorage.getItem(
+                "bikeghor-accessToken"
+              )}`,
+            },
+            body: JSON.stringify({
+              name,
+              email,
+              productName,
+              price,
+              phoneNumber,
+              meetLocation,
+              image,
+              productId: _id,
+            }),
+          })
+            .then((res) => res.json())
+            .then((data) => {
+              if (data.acknowledged) {
+                toast.success(`${title} is booked`);
+                setSelectedProduct(null);
+                setBookingLoading(false);
+              }
+            });
         }
       });
   };
@@ -132,7 +162,7 @@ const BookNowModal = ({ selectedProduct }) => {
               type="submit"
               className="btn btn-primary text-white normal-case w-full mt-6"
             >
-              Submit
+              {bookingLoading ? <Spinner /> : "Submit"}
             </button>
           </form>
         </div>
