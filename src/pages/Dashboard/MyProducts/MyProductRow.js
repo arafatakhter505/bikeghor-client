@@ -1,6 +1,11 @@
 import React from "react";
 
-const MyProductRow = ({ product, index, handleProductDelete }) => {
+const MyProductRow = ({
+  product,
+  index,
+  handleAdvertised,
+  handleProductDelete,
+}) => {
   const { _id, title, image, brandName, date, sold } = product;
   return (
     <tr>
@@ -24,7 +29,10 @@ const MyProductRow = ({ product, index, handleProductDelete }) => {
       <td>{sold ? "Sold" : "Available"}</td>
       <th>
         {sold || (
-          <button className="btn btn-primary text-white normal-case btn-xs">
+          <button
+            onClick={() => handleAdvertised(product)}
+            className="btn btn-primary text-white normal-case btn-xs"
+          >
             Advertised
           </button>
         )}

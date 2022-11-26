@@ -33,6 +33,34 @@ const MyProducts = () => {
     },
   });
 
+  const handleAdvertised = (product) => {
+    fetch(`http://localhost:5000/advertise?email=${user.email}`, {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+        authorization: `bearer ${localStorage.getItem("bikeghor-accessToken")}`,
+      },
+      body: JSON.stringify({
+        productName: product.title,
+        image: product.image,
+        sellerEmail: product.sellerEmail,
+        sold: product.sold,
+        productId: product._id,
+        price: product.reselPrice,
+        condition: product.condition,
+        location: product.location,
+      }),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.acknowledged) {
+          toast.success("Successfully advertised add");
+        } else {
+          toast.error("Something is wrong");
+        }
+      });
+  };
+
   const handleProductDelete = (id) => {
     const confirm = window.confirm("Are you sure delete this product");
     if (confirm) {
@@ -84,6 +112,7 @@ const MyProducts = () => {
                     key={product._id}
                     product={product}
                     index={i}
+                    handleAdvertised={handleAdvertised}
                     handleProductDelete={handleProductDelete}
                   />
                 ))}
