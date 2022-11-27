@@ -25,7 +25,7 @@ const MyOrderRow = ({ order, index }) => {
       <td>{price}</td>
       <th>
         {paid ? (
-          "paid"
+          "Paid"
         ) : (
           <Link to={`/dashboard/payment/${productId}`}>
             <button className="btn btn-primary text-white normal-case btn-sm">

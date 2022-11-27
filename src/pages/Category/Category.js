@@ -56,6 +56,8 @@ const Category = () => {
       .then((data) => {
         if (data.acknowledged) {
           toast.success("Successfully product wishlist add");
+        } else if (data.message) {
+          toast.error(data.message);
         } else {
           toast.error("Something is wrong");
         }
@@ -63,7 +65,7 @@ const Category = () => {
   };
 
   return (
-    <div className="container mx-auto px-6 lg:px-3 my-12">
+    <div className="container mx-auto px-6 lg:px-3 my-12 min-h-[70vh]">
       {isLoading ? (
         <Spinner />
       ) : (
@@ -80,7 +82,7 @@ const Category = () => {
               ))}
             </>
           ) : (
-            <p className="text-center text-xl">No Products</p>
+            <p className="text-center text-4xl">No Products</p>
           )}
         </>
       )}
