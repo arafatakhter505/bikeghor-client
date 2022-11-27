@@ -55,6 +55,8 @@ const MyProducts = () => {
       .then((data) => {
         if (data.acknowledged) {
           toast.success("Successfully advertised add");
+        } else if (data.message) {
+          toast.error(data.message);
         } else {
           toast.error("Something is wrong");
         }

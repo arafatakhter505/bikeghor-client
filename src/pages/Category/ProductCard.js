@@ -1,6 +1,4 @@
-import React from "react";
-import { useQuery } from "@tanstack/react-query";
-import { toast } from "react-hot-toast";
+import React, { useEffect, useState } from "react";
 
 const ProductCard = ({ product, setSelectedProduct, handleWishList }) => {
   const {
@@ -22,27 +20,21 @@ const ProductCard = ({ product, setSelectedProduct, handleWishList }) => {
     sellerEmail,
     booked,
   } = product;
-  const { data: seller } = useQuery({
-    queryKey: ["seller"],
-    queryFn: async () => {
-      try {
-        const res = await fetch(
-          `https://bikeghor-server.vercel.app/users/seller?email=${sellerEmail}`,
-          {
-            headers: {
-              authorization: `bearer ${localStorage.getItem(
-                "bikeghor-accessToken"
-              )}`,
-            },
-          }
-        );
-        const data = await res.json();
-        return data;
-      } catch (error) {
-        toast.error(error.message);
+  const [seller, setSeller] = useState({});
+  useEffect(() => {
+    fetch(
+      `https://bikeghor-server.vercel.app/users/seller?email=${sellerEmail}`,
+      {
+        headers: {
+          authorization: `bearer ${localStorage.getItem(
+            "bikeghor-accessToken"
+          )}`,
+        },
       }
-    },
-  });
+    )
+      .then((res) => res.json())
+      .then((data) => setSeller(data));
+  }, [sellerEmail]);
 
   return (
     <div className="card lg:card-side bg-base-100 shadow-xl mb-12 border">
