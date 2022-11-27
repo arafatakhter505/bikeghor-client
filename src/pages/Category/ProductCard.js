@@ -27,7 +27,7 @@ const ProductCard = ({ product, setSelectedProduct, handleWishList }) => {
     queryFn: async () => {
       try {
         const res = await fetch(
-          `http://localhost:5000/users/seller?email=${sellerEmail}`,
+          `https://bikeghor-server.vercel.app/users/seller?email=${sellerEmail}`,
           {
             headers: {
               authorization: `bearer ${localStorage.getItem(

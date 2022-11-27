@@ -19,7 +19,7 @@ const Category = () => {
     queryFn: async () => {
       try {
         const res = await fetch(
-          `http://localhost:5000/products/category/${id}`,
+          `https://bikeghor-server.vercel.app/products/category/${id}`,
           {
             headers: {
               authorization: `bearer ${localStorage.getItem(
@@ -38,7 +38,7 @@ const Category = () => {
   const [selectedProduct, setSelectedProduct] = useState(null);
 
   const handleWishList = (item) => {
-    fetch(`http://localhost:5000/wishlist?email=${user.email}`, {
+    fetch(`https://bikeghor-server.vercel.app/wishlist?email=${user.email}`, {
       method: "POST",
       headers: {
         "content-type": "application/json",

@@ -16,7 +16,7 @@ const MyProducts = () => {
     queryFn: async () => {
       try {
         const res = await fetch(
-          `http://localhost:5000/products?email=${user.email}`,
+          `https://bikeghor-server.vercel.app/products?email=${user.email}`,
           {
             headers: {
               authorization: `bearer ${localStorage.getItem(
@@ -34,7 +34,7 @@ const MyProducts = () => {
   });
 
   const handleAdvertised = (product) => {
-    fetch(`http://localhost:5000/advertise?email=${user.email}`, {
+    fetch(`https://bikeghor-server.vercel.app/advertise?email=${user.email}`, {
       method: "POST",
       headers: {
         "content-type": "application/json",
@@ -64,20 +64,23 @@ const MyProducts = () => {
   const handleProductDelete = (id) => {
     const confirm = window.confirm("Are you sure delete this product");
     if (confirm) {
-      fetch(`http://localhost:5000/products/${id}?email=${user.email}`, {
-        method: "DELETE",
-        headers: {
-          "content-type": "application/json",
-          authorization: `bearer ${localStorage.getItem(
-            "bikeghor-accessToken"
-          )}`,
-        },
-      })
+      fetch(
+        `https://bikeghor-server.vercel.app/products/${id}?email=${user.email}`,
+        {
+          method: "DELETE",
+          headers: {
+            "content-type": "application/json",
+            authorization: `bearer ${localStorage.getItem(
+              "bikeghor-accessToken"
+            )}`,
+          },
+        }
+      )
         .then((res) => res.json())
         .then((data) => {
           if (data.deletedCount > 0) {
             fetch(
-              `http://localhost:5000/advertise?email=${user.email}&id=${id}`,
+              `https://bikeghor-server.vercel.app/advertise?email=${user.email}&id=${id}`,
               {
                 method: "DELETE",
                 headers: {

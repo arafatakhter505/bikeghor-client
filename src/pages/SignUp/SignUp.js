@@ -23,7 +23,7 @@ const SignUp = () => {
   const handleGoogle = () => {
     googleLogin()
       .then((data) => {
-        fetch("http://localhost:5000/users", {
+        fetch("https://bikeghor-server.vercel.app/users", {
           method: "POST",
           headers: {
             "content-type": "application/json",
@@ -63,7 +63,7 @@ const SignUp = () => {
             if (imgData.success) {
               updateUser(data.name, imgData.data.url)
                 .then(() => {
-                  fetch("http://localhost:5000/users", {
+                  fetch("https://bikeghor-server.vercel.app/users", {
                     method: "POST",
                     headers: {
                       "content-type": "application/json",

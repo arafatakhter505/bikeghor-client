@@ -18,7 +18,7 @@ const Payment = () => {
     queryFn: async () => {
       try {
         const res = await fetch(
-          `http://localhost:5000/products/${id}?email=${user?.email}`,
+          `https://bikeghor-server.vercel.app/products/${id}?email=${user?.email}`,
           {
             headers: {
               authorization: `bearer ${localStorage.getItem(

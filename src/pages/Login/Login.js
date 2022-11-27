@@ -33,7 +33,7 @@ const Login = () => {
   const handleGoogleLogin = () => {
     googleLogin()
       .then((data) => {
-        fetch("http://localhost:5000/users", {
+        fetch("https://bikeghor-server.vercel.app/users", {
           method: "POST",
           headers: {
             "content-type": "application/json",

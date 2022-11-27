@@ -15,7 +15,7 @@ const AddProduct = () => {
 
   useEffect(() => {
     axios
-      .get("http://localhost:5000/categories")
+      .get("https://bikeghor-server.vercel.app/categories")
       .then((res) => setCategories(res.data));
   }, []);
 
@@ -53,7 +53,7 @@ const AddProduct = () => {
             booked: false,
           };
 
-          fetch("http://localhost:5000/products", {
+          fetch("https://bikeghor-server.vercel.app/products", {
             method: "POST",
             headers: {
               "content-type": "application/json",

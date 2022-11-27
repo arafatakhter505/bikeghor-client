@@ -9,7 +9,7 @@ const Advertised = () => {
     queryKey: ["advertise"],
     queryFn: async () => {
       try {
-        const res = await fetch(`http://localhost:5000/advertise`);
+        const res = await fetch(`https://bikeghor-server.vercel.app/advertise`);
         const data = await res.json();
         return data;
       } catch (error) {

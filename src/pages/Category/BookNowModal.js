@@ -19,7 +19,7 @@ const BookNowModal = ({ selectedProduct, setSelectedProduct, refetch }) => {
     const phoneNumber = form.phoneNumber.value;
     const meetLocation = form.meetLocation.value;
 
-    fetch(`http://localhost:5000/products/booked/${_id}`, {
+    fetch(`https://bikeghor-server.vercel.app/products/booked/${_id}`, {
       method: "PUT",
       headers: {
         "content-type": "application/json",
@@ -30,7 +30,7 @@ const BookNowModal = ({ selectedProduct, setSelectedProduct, refetch }) => {
       .then((res) => res.json())
       .then((data) => {
         if (data.modifiedCount > 0) {
-          fetch("http://localhost:5000/orders", {
+          fetch("https://bikeghor-server.vercel.app/orders", {
             method: "POST",
             headers: {
               "content-type": "application/json",

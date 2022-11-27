@@ -16,7 +16,7 @@ const AllBuyers = () => {
     queryFn: async () => {
       try {
         const res = await fetch(
-          `http://localhost:5000/buyers?email=${user.email}`,
+          `https://bikeghor-server.vercel.app/buyers?email=${user.email}`,
           {
             headers: {
               authorization: `bearer ${localStorage.getItem(
@@ -36,15 +36,18 @@ const AllBuyers = () => {
   const handleBuyerDelete = (id) => {
     const confirm = window.confirm("Are you sure delete this user");
     if (confirm) {
-      fetch(`http://localhost:5000/buyers/${id}?email=${user.email}`, {
-        method: "DELETE",
-        headers: {
-          "content-type": "application/json",
-          authorization: `bearer ${localStorage.getItem(
-            "bikeghor-accessToken"
-          )}`,
-        },
-      })
+      fetch(
+        `https://bikeghor-server.vercel.app/buyers/${id}?email=${user.email}`,
+        {
+          method: "DELETE",
+          headers: {
+            "content-type": "application/json",
+            authorization: `bearer ${localStorage.getItem(
+              "bikeghor-accessToken"
+            )}`,
+          },
+        }
+      )
         .then((res) => res.json())
         .then((data) => {
           if (data.deletedCount > 0) {
