@@ -23,5 +23,5 @@ Live website link: [https://bikeghor-4fa21.web.app/](https://bikeghor-4fa21.web.
 
 ## Admin Information
 
-adminEmail: admin@bikeghor.com
-adminPassword: admin12345
+- adminEmail: admin@bikeghor.com
+- adminPassword: admin12345
